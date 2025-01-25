@@ -1,5 +1,17 @@
 import books from "@/app/api/db"
 
+export async function GET(
+    request: Request,
+    context: { params: {id: string}}) {
+    const id = await +context.params.id;
+    console.log("api got request for book:", id);
+    const index = books.findIndex(book => book.id === id);
+    if (index < 0) {
+        throw new Error("book not found");
+    }
+    return Response.json(books[index]);
+}
+
 export async function PUT(
     request: Request,
     context: { params: {id: string}}) {
